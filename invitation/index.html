@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A Royal Summons. You are cordially invited to the Grand Feast of the Realm. Break the seal to reveal your invitation.">
+    <title>A Royal Summons | Game of Thrones Invitation</title>
+    <!-- Google Fonts for Medieval/Game of Thrones Aesthetics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-stark">
+    <!-- Floating background particle effect canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Ambient Audio Toggle -->
+    <button id="audio-toggle" class="audio-btn hidden" aria-label="Toggle music" title="Toggle Epic Ambient Music">
+        <span class="music-icon">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </span>
+        <span class="audio-label">SOUND ON</span>
+    </button>
+
+
+
+    <!-- 1. INTRO / BREAK THE SEAL SCREEN -->
+    <div id="intro-screen" class="intro-screen">
+        <div class="envelope-wrapper">
+            <div class="envelope-back"></div>
+            <div class="envelope-paper">
+                <div class="envelope-parchment-preview">
+                    <p class="cinzel-heading">A SUMMONS FOR YOU</p>
+                </div>
+            </div>
+            <div class="envelope-front"></div>
+            <div class="wax-seal-container">
+                <button id="seal-button" class="wax-seal-btn" aria-label="Break the Seal">
+                    <img src="assets/got_wax_seal.png" alt="Royal Wax Seal" class="wax-seal-img">
+                    <span class="seal-glow"></span>
+                </button>
+            </div>
+            <p class="intro-instruction cinzel-heading">Break the Seal</p>
+            <p class="intro-sub-instruction">TO REVEAL THE DECREE OF THE REALM</p>
+        </div>
+    </div>
+
+    <!-- 2. MAIN CONTENT (SCROLL & INVITATION) -->
+    <div id="main-container" class="main-container hidden">
+        <div class="scroll-wrapper">
+            <!-- Scroll Top Roller -->
+            <div class="scroll-roller scroll-roller-top"></div>
+
+            <!-- Parchment Paper Body -->
+            <div class="scroll-parchment">
+                <div class="parchment-content">
+                    <!-- Heading -->
+                    <div class="header-section text-center">
+                        <p class="summon-badge">BY ORDER OF THE LORDS OF THE REALM</p>
+                        <h1 class="main-title cinzel-heading">A ROYAL SUMMONS</h1>
+                        <div class="divider-swords">
+                            <span class="sword-left"></span>
+                            <span class="sword-right"></span>
+                        </div>
+                    </div>
+
+                    <!-- Host Name & Main Decree -->
+                    <div class="decree-section text-center">
+                        <p class="decree-greeting">Hear Ye, Hear Ye!</p>
+                        <p class="decree-text">
+                            By decree of the High Seat, you are summoned to cross the borders and gather in the Great Hall. The long winter approaches, but tonight we feast, drink, and pledge our allegiances. 
+                        </p>
+                        <div class="honorees">
+                            <h2 class="honoree-names cinzel-heading">LORD JOHNATHAN &amp; LADY AURELIA</h2>
+                            <p class="celebration-type">Request the honour of your presence at</p>
+                            <h3 class="event-name cinzel-heading">THE FEAST OF THE FOUR HOUSES</h3>
+                        </div>
+                    </div>
+
+                    <!-- Event Details Grid -->
+                    <div class="details-grid">
+                        <div class="details-card text-center">
+                            <h4 class="card-title cinzel-heading">THE CASTLE</h4>
+                            <p class="card-text text-bold">The Great Keep at Winterfell</p>
+                            <p class="card-subtext">Castle Ward, Winterfell, The North</p>
+                        </div>
+                        <div class="details-card text-center">
+                            <h4 class="card-title cinzel-heading">THE HOUR</h4>
+                            <p class="card-text text-bold">Saturday, October 24th</p>
+                            <p class="card-subtext">At the fifth hour of the evening</p>
+                        </div>
+                    </div>
+
+                    <!-- Current House Sigil display -->
+                    <div class="sigil-display text-center">
+                        <img id="current-sigil" src="assets/stark_sigil.png" alt="House Sigil" class="sigil-image">
+                        <p id="house-motto" class="house-motto cinzel-heading">"WINTER IS COMING"</p>
+                    </div>
+
+
+
+                    <!-- Countdown Timer -->
+                    <div class="countdown-section text-center">
+                        <h4 class="countdown-title cinzel-heading">WINTER APPROACHES IN</h4>
+                        <div id="countdown" class="countdown-timer">
+                            <div class="time-block">
+                                <span id="days" class="time-num">00</span>
+                                <span class="time-label">DAYS</span>
+                            </div>
+                            <div class="time-block">
+                                <span id="hours" class="time-num">00</span>
+                                <span class="time-label">HOURS</span>
+                            </div>
+                            <div class="time-block">
+                                <span id="minutes" class="time-num">00</span>
+                                <span class="time-label">MINS</span>
+                            </div>
+                            <div class="time-block">
+                                <span id="seconds" class="time-num">00</span>
+                                <span class="time-label">SECS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Details -->
+                    <div class="footer-section text-center">
+                        <p class="valar">VALAR MORGHULIS</p>
+                        <p class="copyright">Invitation of the Realm &copy; 2026. Made for the great lords.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Bottom Roller -->
+            <div class="scroll-roller scroll-roller-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Custom QR Code Library (Inline simple canvas-based QR Code Generator to keep it purely local and static without internet dependencies) -->
+    <script src="script.js"></script>
+</body>
+</html>

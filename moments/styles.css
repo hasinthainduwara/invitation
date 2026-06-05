@@ -1,0 +1,425 @@
+/* ==========================================================================
+   GAME OF THRONES THEMED GALLERY STYLES
+   ========================================================================== */
+
+/* 1. CSS VARIABLES */
+:root {
+    --parchment-bg: radial-gradient(circle, #fcf8f2 0%, #ebdcb9 100%);
+    --parchment-border: #8c7647;
+    --font-heading: 'Cinzel Decorative', Georgia, serif;
+    --font-subheading: 'Cinzel', Georgia, serif;
+    --font-body: 'Cormorant Garamond', serif;
+    
+    --theme-primary: #8fa0a6; /* Silver-grey Stark theme as base */
+    --theme-glow: rgba(200, 220, 230, 0.3);
+    --theme-accent: #d3d9db;
+    --theme-shadow: 0 0 15px rgba(143, 160, 166, 0.4);
+}
+
+/* 2. BASE STYLES */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0b0a09;
+    background-image: 
+        radial-gradient(circle at center, rgba(20,18,16,0.85) 0%, rgba(3,3,3,0.98) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M40 0l40 40-40 40L0 40z' fill='%231b1a18' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+    color: #ebdcb9;
+    font-family: var(--font-body);
+    font-size: 1.15rem;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.text-center { text-align: center; }
+
+/* Canvas for Particles */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.cinzel-heading {
+    font-family: var(--font-heading);
+    letter-spacing: 0.12em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* 3. GALLERY CONTAINER & NAVIGATION */
+.gallery-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px 20px;
+    position: relative;
+    z-index: 10;
+}
+
+.back-link-wrapper {
+    margin-bottom: 30px;
+}
+
+.back-link {
+    display: inline-block;
+    color: #ebdcb9;
+    text-decoration: none;
+    border: 1px solid rgba(140, 118, 71, 0.5);
+    background: rgba(15, 15, 15, 0.6);
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    transition: all 0.3s ease;
+    text-shadow: none;
+}
+
+.back-link:hover {
+    color: #000;
+    background: #ebdcb9;
+    border-color: #ebdcb9;
+    box-shadow: 0 0 12px rgba(235, 220, 185, 0.4);
+    transform: translateX(-3px);
+}
+
+/* 4. HEADER */
+.gallery-header {
+    margin-bottom: 50px;
+}
+
+.gallery-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #fcf8f2;
+    margin-bottom: 10px;
+    letter-spacing: 0.18em;
+}
+
+@media (max-width: 580px) {
+    .gallery-title {
+        font-size: 1.8rem;
+    }
+}
+
+.gallery-subtitle {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #8c7f68;
+    margin-bottom: 25px;
+}
+
+.divider-line {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.line-left, .line-right {
+    height: 1px;
+    flex-grow: 1;
+    background: linear-gradient(to right, transparent, #8c7647 40%, #8c7647 60%, transparent);
+}
+
+/* 5. CATEGORY FILTERS */
+.gallery-filters {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.filter-btn {
+    background: transparent;
+    color: #ebdcb9;
+    border: 1px solid rgba(140, 118, 71, 0.4);
+    padding: 8px 20px;
+    font-family: var(--font-subheading);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    outline: none;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: rgba(140, 118, 71, 0.2);
+    border-color: #ebdcb9;
+    box-shadow: 0 0 10px rgba(235, 220, 185, 0.25);
+    color: #fff;
+}
+
+/* 6. PHOTO GRID & CARDS */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+@media (max-width: 900px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 580px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}
+
+/* Polaroid Parchment Card Style */
+.gallery-card {
+    cursor: pointer;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Alternate slight rotation for rustic layout feel */
+.gallery-card:nth-child(odd) {
+    transform: rotate(-1deg);
+}
+.gallery-card:nth-child(even) {
+    transform: rotate(1deg);
+}
+
+.gallery-card.hidden {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.card-inner {
+    background: var(--parchment-bg);
+    border: 1px solid var(--parchment-border);
+    padding: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 2px;
+}
+
+/* Burned edge noise layer */
+.card-inner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.gallery-card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    z-index: 20;
+}
+
+.gallery-card:hover .card-inner {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    border-color: #ebdcb9;
+}
+
+.card-img-wrapper {
+    width: 100%;
+    position: relative;
+    padding-bottom: 75%; /* 4:3 Aspect Ratio */
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(140, 118, 71, 0.3);
+}
+
+.gallery-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%) sepia(30%) contrast(110%);
+    transition: transform 0.6s ease;
+}
+
+.gallery-card:hover .gallery-img {
+    transform: scale(1.08);
+    filter: grayscale(0%) sepia(0%) contrast(100%);
+}
+
+.card-info {
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    color: #2b1f12;
+}
+
+.card-category {
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    color: #8c7647;
+    margin-bottom: 4px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    color: #1a130a;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: none;
+    line-height: 1.2;
+}
+
+.card-date {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #6d5b3f;
+    margin-top: auto;
+}
+
+/* 7. LIGHTBOX MODAL */
+.lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(4, 4, 3, 0.96);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.lightbox-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: none;
+    border: none;
+    color: #ebdcb9;
+    font-size: 3rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 1010;
+}
+
+.lightbox-close:hover {
+    color: #fff;
+}
+
+/* Lightbox Nav Buttons */
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(15, 15, 15, 0.5);
+    border: 1px solid rgba(140, 118, 71, 0.3);
+    color: #ebdcb9;
+    font-size: 2rem;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    z-index: 1010;
+    user-select: none;
+}
+
+.lightbox-nav:hover {
+    background: rgba(235, 220, 185, 0.85);
+    color: #000;
+    border-color: #ebdcb9;
+}
+
+.lightbox-prev { left: 30px; }
+.lightbox-next { right: 30px; }
+
+@media (max-width: 580px) {
+    .lightbox-nav {
+        padding: 10px 14px;
+        font-size: 1.5rem;
+    }
+    .lightbox-prev { left: 10px; }
+    .lightbox-next { right: 10px; }
+}
+
+.lightbox-content {
+    max-width: 80%;
+    max-height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightbox-modal.visible .lightbox-content {
+    transform: scale(1);
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border: 3px double var(--parchment-border);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+    background: #000;
+}
+
+.lightbox-info {
+    background: var(--parchment-bg);
+    border: 1px solid var(--parchment-border);
+    padding: 15px 25px;
+    width: 100%;
+    margin-top: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    color: #382c1a;
+    border-radius: 2px;
+}
+
+.lightbox-info h3 {
+    font-size: 1.3rem;
+    color: #1a130a;
+    margin-bottom: 6px;
+    text-shadow: none;
+}
+
+.lightbox-info p {
+    font-size: 1rem;
+    font-style: italic;
+    color: #4a3e2e;
+}

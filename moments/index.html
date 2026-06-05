@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moments of the Realm. Browse the chronicled images of the Seven Kingdoms.">
+    <title>Moments of the Realm | Photo Gallery</title>
+    <!-- Google Fonts for Medieval/Game of Thrones Aesthetics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Floating background particle effect canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="gallery-container">
+        <!-- Back Navigation Link -->
+        <div class="back-link-wrapper">
+            <a href="../invitation/" class="back-link cinzel-heading">Back to Summons</a>
+        </div>
+
+        <!-- Header Section -->
+        <header class="gallery-header text-center">
+            <h1 class="gallery-title cinzel-heading">MOMENTS OF THE REALM</h1>
+            <p class="gallery-subtitle">A collection of chronicled sights and scrolls across the Seven Kingdoms</p>
+            <div class="divider-line">
+                <span class="line-left"></span>
+                <span class="line-right"></span>
+            </div>
+        </header>
+
+        <!-- Category Filters -->
+        <div class="gallery-filters text-center">
+            <button class="filter-btn active" data-filter="all">All Chronicles</button>
+            <button class="filter-btn" data-filter="celebrations">Celebrations</button>
+            <button class="filter-btn" data-filter="gatherings">Gatherings</button>
+            <button class="filter-btn" data-filter="journeys">Journeys</button>
+        </div>
+
+        <!-- Photos Grid -->
+        <main class="gallery-grid">
+            <!-- 1. Winterfell (Gatherings) -->
+            <article class="gallery-card groupings gatherings" data-category="gatherings" data-src="assets/winterfell.png" data-title="Winterfell Courtyard" data-desc="A silent, snow-draped evening inside the ancient grey stone seat of the Stark Lords.">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="assets/winterfell.png" alt="Winterfell Courtyard" class="gallery-img">
+                    </div>
+                    <div class="card-info">
+                        <span class="card-category cinzel-heading">Gatherings</span>
+                        <h2 class="card-title cinzel-heading">Winterfell Courtyard</h2>
+                        <p class="card-date">Winter Solstice, 298 AC</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 2. Feast Hall (Celebrations) -->
+            <article class="gallery-card groupings celebrations" data-category="celebrations" data-src="assets/feast_hall.png" data-title="The King's Banquet" data-desc="A warm gathering in the candlelit Great Keep, feasting on meat and mead to honor the alliance.">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="assets/feast_hall.png" alt="The King's Banquet" class="gallery-img">
+                    </div>
+                    <div class="card-info">
+                        <span class="card-category cinzel-heading">Celebrations</span>
+                        <h2 class="card-title cinzel-heading">The King's Banquet</h2>
+                        <p class="card-date">Oathtaking Ceremony, 298 AC</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 3. Kings Landing (Journeys) -->
+            <article class="gallery-card groupings journeys" data-category="journeys" data-src="assets/kingslanding.png" data-title="The Red Keep Overlook" data-desc="The grand red stone towers of the royal keep, looking over the sunlit expanse of Blackwater Bay.">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="assets/kingslanding.png" alt="The Red Keep Overlook" class="gallery-img">
+                    </div>
+                    <div class="card-info">
+                        <span class="card-category cinzel-heading">Journeys</span>
+                        <h2 class="card-title cinzel-heading">The Red Keep</h2>
+                        <p class="card-date">Mid-Summer Voyage, 299 AC</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4. Dragonstone (Journeys) -->
+            <article class="gallery-card groupings journeys" data-category="journeys" data-src="assets/dragonstone.png" data-title="Dragonstone Cliffs" data-desc="The dark obsidian-carved sea fortress standing ruggedly against the cold, crashing ocean tides.">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="assets/dragonstone.png" alt="Dragonstone Cliffs" class="gallery-img">
+                    </div>
+                    <div class="card-info">
+                        <span class="card-category cinzel-heading">Journeys</span>
+                        <h2 class="card-title cinzel-heading">Dragonstone Cliffs</h2>
+                        <p class="card-date">Reclaiming the Throne, 300 AC</p>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <!-- LIGHTBOX MODAL OVERLAY -->
+    <div id="lightbox" class="lightbox-modal">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">&#10094;</button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">&#10095;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Enlarged gallery view">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title" class="cinzel-heading"></h3>
+                <p id="lightbox-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
