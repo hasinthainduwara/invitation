@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A Royal Summons. You are cordially invited to the Grand Feast of the Realm. Break the seal to reveal your invitation.">
     <title>A Royal Summons | Game of Thrones Invitation</title>
+    <script>
+        if (window.location.pathname.endsWith('/invitation')) {
+            window.location.replace(window.location.pathname + '/');
+        }
+    </script>
     <!-- Google Fonts for Medieval/Game of Thrones Aesthetics -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
