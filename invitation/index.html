@@ -3,147 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A Royal Summons. You are cordially invited to the Grand Feast of the Realm. Break the seal to reveal your invitation.">
-    <title>A Royal Summons | Game of Thrones Invitation</title>
-    <script>
-        if (window.location.pathname.endsWith('/invitation')) {
-            window.location.replace(window.location.pathname + '/');
-        }
-    </script>
+    <meta name="description" content="A Royal Summons to the Realm. View the 3D Keep and RSVP to the gathering.">
+    <title>Summons to the Realm | 3D Interactive Invitation</title>
     <!-- Google Fonts for Medieval/Game of Thrones Aesthetics -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="stylesheet" href="styles.css?v=12">
+    
+    <!-- Three.js & Loaders (CDN) -->
+    <!-- Core Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- fflate is required by FBXLoader to decompress binary FBX files -->
+    <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
+    <!-- FBXLoader -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
+    <!-- OrbitControls -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
-<body class="theme-stark">
-    <!-- Floating background particle effect canvas -->
-    <canvas id="particles-canvas"></canvas>
+<body>
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
 
-    <!-- Ambient Audio Toggle -->
-    <button id="audio-toggle" class="audio-btn hidden" aria-label="Toggle music" title="Toggle Epic Ambient Music">
-        <span class="music-icon">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </span>
-        <span class="audio-label">SOUND ON</span>
-    </button>
+    <!-- Splash Screen / Loading Screen -->
+    <section id="splash-screen" class="splash-container">
+        <!-- Ambient particle background for loading screen -->
+        <canvas id="splash-particles"></canvas>
+        
+        <div class="splash-content">
+            <h2 class="splash-subtitle cinzel-heading">YOU ARE SUMMONED BY THE LORDS</h2>
+            <h1 class="splash-title cinzel-heading">THE REALM</h1>
+            
+            <!-- Pulsing Crest Graphic -->
+            <div class="crest-container">
+                <svg class="crest-svg" viewBox="0 0 100 100" width="120" height="120">
+                    <!-- Medieval Crest Shield Outline -->
+                    <path d="M50,10 C65,10 75,15 80,25 C80,55 70,75 50,90 C30,75 20,55 20,25 C25,15 35,10 50,10 Z" 
+                          fill="none" stroke="#ebdcb9" stroke-width="2" stroke-linecap="round" />
+                    <!-- Rising Flame/Sword icon inside crest -->
+                    <path d="M50,25 L50,65 M43,35 L57,35 M50,22 L53,27 L47,27 Z" 
+                          fill="none" stroke="#ebdcb9" stroke-width="2" stroke-linejoin="round" />
+                    <!-- Decorative Wings/Flames -->
+                    <path d="M30,35 Q22,45 32,55 T45,65" fill="none" stroke="#ebdcb9" stroke-width="1.5" opacity="0.6"/>
+                    <path d="M70,35 Q78,45 68,55 T55,65" fill="none" stroke="#ebdcb9" stroke-width="1.5" opacity="0.6"/>
+                </svg>
+            </div>
 
-
-
-    <!-- 1. INTRO / BREAK THE SEAL SCREEN -->
-    <div id="intro-screen" class="intro-screen">
-        <div class="envelope-wrapper">
-            <div class="envelope-back"></div>
-            <div class="envelope-paper">
-                <div class="envelope-parchment-preview">
-                    <p class="cinzel-heading">A SUMMONS FOR YOU</p>
+            <!-- Loading Progress Bar -->
+            <div class="progress-wrapper">
+                <div class="progress-bar-bg">
+                    <div id="progress-bar"></div>
+                </div>
+                <div class="progress-details">
+                    <span id="loading-text" class="cinzel-heading">Gathering the Stones...</span>
+                    <span id="loading-percentage" class="cinzel-heading">0%</span>
                 </div>
             </div>
-            <div class="envelope-front"></div>
-            <div class="wax-seal-container">
-                <button id="seal-button" class="wax-seal-btn" aria-label="Break the Seal">
-                    <img src="assets/got_wax_seal.png" alt="Royal Wax Seal" class="wax-seal-img">
-                    <span class="seal-glow"></span>
+
+            <!-- Enter Button -->
+            <button id="enter-btn" class="enter-btn cinzel-heading hidden">ENTER THE KEEP</button>
+        </div>
+    </section>
+
+    <!-- Interactive UI Overlay -->
+    <div id="ui-overlay" class="ui-visible-after-load">
+        <!-- Top Bar Navigation -->
+        <header class="ui-header">
+            <div class="header-left">
+                <a href="../moments/" class="nav-link cinzel-heading" id="btn-moments">View Chronicles</a>
+            </div>
+            <div class="header-right">
+                <button id="audio-toggle" class="ui-btn" aria-label="Toggle ambient audio">
+                    <span class="icon">🔊</span>
+                    <span class="label cinzel-heading">Mute Ambient</span>
                 </button>
             </div>
-            <p class="intro-instruction cinzel-heading">Break the Seal</p>
-            <p class="intro-sub-instruction">TO REVEAL THE DECREE OF THE REALM</p>
+        </header>
+
+        <!-- Right Side Toggle Controls -->
+        <div class="side-controls">
+            <button id="scroll-toggle" class="ui-btn main-btn cinzel-heading">Read Summons</button>
+            <button id="controls-toggle" class="ui-btn secondary-btn cinzel-heading">Help</button>
         </div>
-    </div>
 
-    <!-- 2. MAIN CONTENT (SCROLL & INVITATION) -->
-    <div id="main-container" class="main-container hidden">
-        <div class="scroll-wrapper">
-            <!-- Scroll Top Roller -->
-            <div class="scroll-roller scroll-roller-top"></div>
+        <!-- Help/Controls Overlay Card -->
+        <div id="help-card" class="info-card floating-card hidden">
+            <button class="card-close" id="help-close" aria-label="Close help">&times;</button>
+            <h3 class="card-title cinzel-heading">HOW TO NAVIGATE</h3>
+            <div class="card-divider"></div>
+            <ul class="help-list">
+                <li><span class="action">WASD / Arrow Keys</span> to walk around the Great Keep.</li>
+                <li><span class="action">Drag mouse</span> to look around in first-person view.</li>
+                <li><span class="action">Click on any object</span> (pillars, hearth, floor) to walk over and inspect details.</li>
+            </ul>
+        </div>
 
-            <!-- Parchment Paper Body -->
-            <div class="scroll-parchment">
-                <div class="parchment-content">
-                    <!-- Heading -->
-                    <div class="header-section text-center">
-                        <p class="summon-badge">BY ORDER OF THE LORDS OF THE REALM</p>
-                        <h1 class="main-title cinzel-heading">A ROYAL SUMMONS</h1>
-                        <div class="divider-swords">
-                            <span class="sword-left"></span>
-                            <span class="sword-right"></span>
-                        </div>
-                    </div>
+        <!-- Dynamic Object Info Card (Triggered on click of 3D objects) -->
+        <div id="object-card" class="info-card floating-card hidden">
+            <button class="card-close" id="object-close" aria-label="Close details">&times;</button>
+            <h3 id="object-title" class="card-title cinzel-heading">Object Details</h3>
+            <div class="card-divider"></div>
+            <p id="object-description" class="card-desc">Detailed descriptions will appear here.</p>
+        </div>
 
-                    <!-- Host Name & Main Decree -->
-                    <div class="decree-section text-center">
-                        <p class="decree-greeting">Hear Ye, Hear Ye!</p>
-                        <p class="decree-text">
-                            By decree of the High Seat, you are summoned to cross the borders and gather in the Great Hall. The long winter approaches, but tonight we feast, drink, and pledge our allegiances. 
-                        </p>
-                        <div class="honorees">
-                            <h2 class="honoree-names cinzel-heading">LORD JOHNATHAN &amp; LADY AURELIA</h2>
-                            <p class="celebration-type">Request the honour of your presence at</p>
-                            <h3 class="event-name cinzel-heading">THE FEAST OF THE FOUR HOUSES</h3>
-                        </div>
-                    </div>
-
-                    <!-- Event Details Grid -->
-                    <div class="details-grid">
-                        <div class="details-card text-center">
-                            <h4 class="card-title cinzel-heading">THE CASTLE</h4>
-                            <p class="card-text text-bold">The Great Keep at Winterfell</p>
-                            <p class="card-subtext">Castle Ward, Winterfell, The North</p>
-                        </div>
-                        <div class="details-card text-center">
-                            <h4 class="card-title cinzel-heading">THE HOUR</h4>
-                            <p class="card-text text-bold">Saturday, October 24th</p>
-                            <p class="card-subtext">At the fifth hour of the evening</p>
-                        </div>
-                    </div>
-
-                    <!-- Current House Sigil display -->
-                    <div class="sigil-display text-center">
-                        <img id="current-sigil" src="assets/stark_sigil.png" alt="House Sigil" class="sigil-image">
-                        <p id="house-motto" class="house-motto cinzel-heading">"WINTER IS COMING"</p>
-                    </div>
-
-
-
-                    <!-- Countdown Timer -->
-                    <div class="countdown-section text-center">
-                        <h4 class="countdown-title cinzel-heading">WINTER APPROACHES IN</h4>
-                        <div id="countdown" class="countdown-timer">
-                            <div class="time-block">
-                                <span id="days" class="time-num">00</span>
-                                <span class="time-label">DAYS</span>
+        <!-- Invitation Scroll Parchment Container -->
+        <div id="scroll-overlay" class="scroll-container hidden">
+            <div class="scroll-scroller">
+                <!-- Top scroll bar -->
+                <div class="scroll-roller top"></div>
+                
+                <!-- Parchment sheet -->
+                <article class="parchment-sheet">
+                    <div class="parchment-inner">
+                        <header class="parchment-header text-center">
+                            <h2 class="parchment-category cinzel-heading">By Order of the Lords of the Realm</h2>
+                            <h1 class="parchment-title cinzel-heading">ROYAL SUMMONS</h1>
+                            <div class="parchment-divider">
+                                <span class="line-left"></span>
+                                <svg viewBox="0 0 100 100" width="20" height="20" class="divider-icon">
+                                    <path d="M50,15 L50,85 M20,50 L80,50" stroke="#8c7647" stroke-width="3"/>
+                                    <rect x="42" y="42" width="16" height="16" fill="#fcf8f2" stroke="#8c7647" stroke-width="2" transform="rotate(45 50 50)"/>
+                                </svg>
+                                <span class="line-right"></span>
                             </div>
-                            <div class="time-block">
-                                <span id="hours" class="time-num">00</span>
-                                <span class="time-label">HOURS</span>
+                        </header>
+                        
+                        <div class="parchment-body">
+                            <p class="greeting text-center">Hearken, noble lord, lady, or champion of the Realm,</p>
+                            <p class="summons-text">
+                                You are hereby summoned to assemble at the Great Keep of the Seven Kingdoms to witness the grand celebration of union and honor. The ancient halls are ready, the hearth fires are stoked, and the goblet is filled. 
+                            </p>
+                            
+                            <div class="details-box text-center">
+                                <h3 class="details-heading cinzel-heading">THE GATHERING</h3>
+                                <p class="detail-item"><strong class="cinzel-heading">DATE:</strong> Summer Solstice, 298 AC</p>
+                                <p class="detail-item"><strong class="cinzel-heading">HOUR:</strong> The Turn of the Dusk Tide</p>
+                                <p class="detail-item"><strong class="cinzel-heading">LOCATION:</strong> The Great Keep, Valyrian Halls</p>
                             </div>
-                            <div class="time-block">
-                                <span id="minutes" class="time-num">00</span>
-                                <span class="time-label">MINS</span>
+
+                            <div class="wax-seal-wrapper text-center">
+                                <svg class="wax-seal" viewBox="0 0 100 100" width="90" height="90">
+                                    <circle cx="50" cy="50" r="42" fill="#8c1c1c" filter="drop-shadow(2px 4px 6px rgba(0,0,0,0.6))" />
+                                    <!-- Inner irregular border of stamp -->
+                                    <path d="M50,12 C72,10 85,25 88,50 C90,75 72,88 50,88 C28,88 10,75 12,50 C15,25 28,10 50,12 Z" 
+                                          fill="none" stroke="#631010" stroke-width="3" />
+                                    <!-- Sigil mark inside wax seal (Dragon/Sword) -->
+                                    <path d="M50,22 L50,78 M35,42 L65,42 M42,42 C42,30 58,30 58,42" fill="none" stroke="#a62929" stroke-width="3.5" stroke-linecap="round"/>
+                                </svg>
+                                <p class="sigil-label cinzel-heading">Seal of the Realm</p>
                             </div>
-                            <div class="time-block">
-                                <span id="seconds" class="time-num">00</span>
-                                <span class="time-label">SECS</span>
+                            
+                            <div class="text-center actions-wrapper">
+                                <button id="btn-rsvp-trigger" class="rsvp-btn cinzel-heading">RSVP Allegiance</button>
                             </div>
                         </div>
                     </div>
+                </article>
 
-                    <!-- Footer Details -->
-                    <div class="footer-section text-center">
-                        <p class="valar">VALAR MORGHULIS</p>
-                        <p class="copyright">Invitation of the Realm &copy; 2026. Made for the great lords.</p>
+                <!-- Bottom scroll bar -->
+                <div class="scroll-roller bottom"></div>
+            </div>
+        </div>
+
+        <!-- RSVP Form Modal -->
+        <div id="rsvp-modal" class="rsvp-modal-overlay hidden">
+            <div class="rsvp-modal-content">
+                <button class="card-close" id="rsvp-close" aria-label="Close RSVP">&times;</button>
+                <h2 class="rsvp-modal-title cinzel-heading">CHRONICLE YOUR ATTENDANCE</h2>
+                <div class="card-divider"></div>
+                
+                <form id="rsvp-form" class="rsvp-form-body">
+                    <div class="form-group">
+                        <label for="rsvp-name" class="cinzel-heading">Your Name / Title</label>
+                        <input type="text" id="rsvp-name" placeholder="e.g. Lord Eddard Stark" required>
                     </div>
+
+                    <div class="form-group">
+                        <label for="rsvp-house" class="cinzel-heading">Allegiance / House</label>
+                        <select id="rsvp-house" required>
+                            <option value="" disabled selected>Select your allegiance...</option>
+                            <option value="stark">House Stark of Winterfell</option>
+                            <option value="lannister">House Lannister of Casterly Rock</option>
+                            <option value="targaryen">House Targaryen of Dragonstone</option>
+                            <option value="baratheon">House Baratheon of Storm's End</option>
+                            <option value="greyjoy">House Greyjoy of Pyke</option>
+                            <option value="martell">House Martell of Sunspear</option>
+                            <option value="tyrell">House Tyrell of Highgarden</option>
+                            <option value="other">An Independent Champion</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cinzel-heading">Response</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="rsvp-status" value="accept" checked required>
+                                <span class="custom-radio"></span>
+                                I shall attend the gathering.
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="rsvp-status" value="decline">
+                                <span class="custom-radio"></span>
+                                My sword is bound elsewhere.
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn cinzel-heading">Send Summon Response</button>
+                </form>
+
+                <div id="rsvp-success" class="rsvp-success-message hidden text-center">
+                    <svg class="success-check-svg" viewBox="0 0 100 100" width="60" height="60">
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="#ebdcb9" stroke-width="2"/>
+                        <path d="M30,52 L45,67 L70,37" fill="none" stroke="#ebdcb9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="cinzel-heading">Response Chronicled</h3>
+                    <p id="rsvp-success-text">Your house's seal has been set upon the roster. Safe journeys.</p>
                 </div>
             </div>
-
-            <!-- Scroll Bottom Roller -->
-            <div class="scroll-roller scroll-roller-bottom"></div>
         </div>
     </div>
 
-    <!-- Custom QR Code Library (Inline simple canvas-based QR Code Generator to keep it purely local and static without internet dependencies) -->
-    <script src="script.js"></script>
+    <!-- Script file containing Three.js and site interactions -->
+    <script src="script.js?v=12"></script>
 </body>
 </html>
