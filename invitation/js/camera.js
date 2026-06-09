@@ -16,11 +16,7 @@ export function enableFirstPersonView(position) {
     applyFirstPersonRotation();
 
     // Show mobile D-pad on touch devices
-    if (state._showMobileControls) {
-        state._showMobileControls();
-    } else {
-        showMobileControls();
-    }
+    showMobileControls();
 }
 
 export function enterTheKeep() {

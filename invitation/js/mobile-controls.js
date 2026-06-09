@@ -108,7 +108,6 @@ export function initMobileControls() {
     if (!detectTouch()) return;
 
     mobileControlsEl = document.getElementById('mobile-controls');
-    lookHintEl = document.getElementById('look-hint');
 
     if (!mobileControlsEl) return;
 
@@ -119,29 +118,4 @@ export function initMobileControls() {
         dpad.addEventListener('touchend', handleTouchEnd, { passive: false });
         dpad.addEventListener('touchcancel', handleTouchEnd, { passive: false });
     }
-
-    // Hide the look hint after 6 seconds of first-person mode
-    let hintTimeout = null;
-    const origShow = showMobileControls;
-
-    // Override showMobileControls to auto-hide the look hint
-    const _showMobileControls = () => {
-        origShow();
-        if (lookHintEl) {
-            lookHintEl.style.display = '';
-            clearTimeout(hintTimeout);
-            hintTimeout = setTimeout(() => {
-                if (lookHintEl) {
-                    lookHintEl.style.transition = 'opacity 1s ease';
-                    lookHintEl.style.opacity = '0';
-                    setTimeout(() => {
-                        if (lookHintEl) lookHintEl.style.display = 'none';
-                    }, 1000);
-                }
-            }, 6000);
-        }
-    };
-
-    // Monkey-patch the exported show function by storing on state
-    state._showMobileControls = _showMobileControls;
 }

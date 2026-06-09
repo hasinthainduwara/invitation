@@ -10,6 +10,7 @@ const fbxFiles = [
     'Column1.fbx',
     'BigColumn.fbx',
     '1.fbx',
+    'r1.fbx',
     'top2.fbx',
     'FireBowl.fbx'
 ];
@@ -210,6 +211,12 @@ function assembleHall() {
     state.keepGroup.add(roof);
 
     pillar.position.set(0, pillarSize.y / 2, 0);
+    const r1 = state.loadedFBX['r1.fbx'];
+    if (r1) {
+        const r1Size = r1.userData.originalSize;
+        r1.position.set(0, pillarSize.y / 2 + r1Size.y / 2, 0);
+        pillar.add(r1);
+    }
     state.keepGroup.add(pillar);
 
     zColumnPositions.forEach((zPos, index) => {

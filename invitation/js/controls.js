@@ -50,58 +50,6 @@ export function initControls() {
             state.keysPressed[key] = false;
         }
     });
-
-    const canvasElement = state.renderer.domElement;
-
-    canvasElement.addEventListener('click', () => {
-        if (!state.firstPersonActive || state.introAnimationActive || state.focusAnimationActive) return;
-        if (document.pointerLockElement !== canvasElement) {
-            canvasElement.requestPointerLock();
-        }
-    });
-
-    document.addEventListener('pointerlockchange', () => {
-        state.isPointerLocked = document.pointerLockElement === canvasElement;
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!state.firstPersonActive || state.introAnimationActive || state.focusAnimationActive) return;
-        if (!state.isPointerLocked) return;
-
-        handleLookDelta(e.movementX, e.movementY);
-    });
-
-    // Fallback drag-to-look for touch and when pointer lock is unavailable
-    canvasElement.addEventListener('pointerdown', (e) => {
-        if (!state.firstPersonActive || state.introAnimationActive || state.focusAnimationActive) return;
-        if (e.button !== 0) return;
-        if (state.isPointerLocked) return;
-
-        state.isLookDragging = true;
-        state.prevPointerX = e.clientX;
-        state.prevPointerY = e.clientY;
-        syncYawPitchFromCamera();
-    });
-
-    window.addEventListener('pointermove', (e) => {
-        if (!state.isLookDragging || state.isPointerLocked) return;
-
-        const dx = e.clientX - state.prevPointerX;
-        const dy = e.clientY - state.prevPointerY;
-
-        state.prevPointerX = e.clientX;
-        state.prevPointerY = e.clientY;
-
-        handleLookDelta(dx, dy);
-    });
-
-    window.addEventListener('pointerup', () => {
-        state.isLookDragging = false;
-    });
-
-    window.addEventListener('pointercancel', () => {
-        state.isLookDragging = false;
-    });
 }
 
 export function updateFirstPersonMovement(delta) {

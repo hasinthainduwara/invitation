@@ -17,6 +17,7 @@ export const dom = {
     objectDescription: null,
     objectClose: null,
     scrollOverlay: null,
+    scrollClose: null,
     btnRsvpTrigger: null,
     rsvpModal: null,
     rsvpClose: null,
@@ -47,6 +48,7 @@ export function initDom() {
     dom.objectClose = document.getElementById('object-close');
 
     dom.scrollOverlay = document.getElementById('scroll-overlay');
+    dom.scrollClose = document.getElementById('scroll-close');
     dom.btnRsvpTrigger = document.getElementById('btn-rsvp-trigger');
 
     dom.rsvpModal = document.getElementById('rsvp-modal');

@@ -19,6 +19,11 @@ export function initUI() {
         }
     });
 
+    dom.scrollClose.addEventListener('click', () => {
+        dom.scrollOverlay.classList.add('hidden');
+        dom.scrollToggle.textContent = "Read Summons";
+    });
+
     dom.btnRsvpTrigger.addEventListener('click', () => {
         dom.scrollOverlay.classList.add('hidden');
         dom.scrollToggle.textContent = "Read Summons";
