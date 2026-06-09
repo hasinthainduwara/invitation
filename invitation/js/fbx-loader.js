@@ -2,6 +2,8 @@ import { state } from './state.js';
 import { dom } from './dom.js';
 import { getMaterialForFBX } from './materials.js';
 import { initFireEmbers, initDustParticles } from './particles.js';
+import { initMoonRays } from './moonrays.js';
+import { initMagicParticles } from './magic.js';
 import { enterTheKeep } from './camera.js';
 
 const fbxFiles = [
@@ -215,6 +217,9 @@ function assembleHall() {
     if (r1) {
         const r1Size = r1.userData.originalSize;
         r1.position.set(0, pillarSize.y / 2 + r1Size.y / 2, 0);
+        // Remember resting height + float amplitude for the focal animation
+        r1.userData.baseLocalY = r1.position.y;
+        r1.userData.bobAmp = r1Size.y * 0.25;
         pillar.add(r1);
     }
     state.keepGroup.add(pillar);
@@ -272,7 +277,7 @@ function calibrateScene() {
             const pos = new THREE.Vector3(bowlCenter.x, fireHeight, bowlCenter.z);
             state.fireBowlPositions.push(pos);
 
-            const light = new THREE.PointLight(0xff5500, 2.0, 18, 1.5);
+            const light = new THREE.PointLight(0xff6a2a, 2.2, 11, 1.7);
             light.position.copy(pos);
             light.castShadow = false;
             state.scene.add(light);
@@ -281,6 +286,7 @@ function calibrateScene() {
             const geo = new THREE.SphereGeometry(0.20, 16, 16);
             const core = new THREE.Mesh(geo, state.fireCoreMaterial);
             core.position.copy(pos).y -= 0.06;
+            core.userData.baseY = core.position.y;
             state.scene.add(core);
             state.fireCoreMeshes.push(core);
         }
@@ -294,6 +300,18 @@ function calibrateScene() {
 
     initFireEmbers();
     initDustParticles(state.sceneCenter, state.sceneSize);
+    initMoonRays(state.sceneCenter, state.sceneSize);
+
+    // Enchanted sparkles above the scroll (pedestal top)
+    const scroll = state.loadedFBX['r1.fbx'];
+    if (scroll) {
+        state.keepGroup.updateMatrixWorld(true);
+        const scrollPos = new THREE.Vector3();
+        scroll.getWorldPosition(scrollPos);
+        const scrollSize = new THREE.Vector3();
+        new THREE.Box3().setFromObject(scroll).getSize(scrollSize);
+        initMagicParticles(scrollPos, scrollSize);
+    }
 
     state.eyeLevelY = state.sceneCenter.y - state.sceneSize.y * 0.30;
 

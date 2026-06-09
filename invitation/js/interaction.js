@@ -1,6 +1,5 @@
 import { state } from './state.js';
 import { dom } from './dom.js';
-import { animateFocusToPoint } from './camera.js';
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -14,37 +13,6 @@ function getFBXName(mesh) {
         node = node.parent;
     }
     return mesh.name || '';
-}
-
-function displayObjectDetails(fileName, point) {
-    let title = "Ancient Architecture";
-    let desc = "A piece of the Great Keep of the Realm, constructed with stone from Valyria.";
-
-    const name = fileName.toLowerCase();
-    if (name.includes('floor')) {
-        title = "The Basalt Floor";
-        desc = "A grand tiled floor composed of dark volcanic basalt. Worn smooth by the boots of countless knights, heralds, and lords who have sworn oaths of fealty in these halls.";
-    } else if (name.includes('wall')) {
-        title = "Walls of the Great Keep";
-        desc = "Heavy stone brick barricades lined with ancient timber moldings. Built extra thick to lock in the stoke heat and withstand siege engines during the freezing winters.";
-    } else if (name.includes('column') || name.includes('1.fbx') || name === '1') {
-        title = "Pillars of the Ancients";
-        desc = "Massive hand-sculpted granite pillars that frame the aisle. Each capital and base is trimmed with polished iron rings, holding up the vast vaulted ceiling.";
-    } else if (name.includes('top')) {
-        title = "The Arched Shingle Vault";
-        desc = "An interlocking roof dome structured from overlapping slate tiles. Designed by master masons to echo court trumpets and focus daylight down onto the assembly floor.";
-    } else if (name.includes('bowl') || name.includes('fire')) {
-        title = "Hearth of Dragonglass";
-        desc = "A forged black-iron firebowl stoking a deep orange flame. A centerpiece of the court, it burns constantly using magical coal as a sign of warm sanctuary.";
-    }
-
-    dom.objectTitle.textContent = title.toUpperCase();
-    dom.objectDescription.textContent = desc;
-
-    dom.helpCard.classList.add('hidden');
-    dom.objectCard.classList.remove('hidden');
-
-    animateFocusToPoint(point, fileName);
 }
 
 export function initInteraction() {
@@ -80,14 +48,6 @@ export function initInteraction() {
         if (isLocked) {
             document.exitPointerLock();
             return true;
-        }
-
-        if (intersects.length > 0) {
-            if (!state.firstPersonActive || state.introAnimationActive || state.focusAnimationActive) return false;
-
-            const hitObj = intersects[0].object;
-            const fbxFile = getFBXName(hitObj);
-            displayObjectDetails(fbxFile, intersects[0].point);
         }
 
         return false;

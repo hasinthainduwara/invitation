@@ -32,7 +32,7 @@ export function initMaterials() {
     });
 
     state.fireCoreMaterial = new THREE.MeshBasicMaterial({
-        color: 0xff6600,
+        color: 0xff7320,
         transparent: true,
         opacity: 0.95
     });

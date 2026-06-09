@@ -50,7 +50,7 @@ export function initScene() {
 }
 
 function initLighting() {
-    const ambientLight = new THREE.AmbientLight(0x3a4d6b, 1.2);
+    const ambientLight = new THREE.AmbientLight(0x2d4570, 1.15);
     state.scene.add(ambientLight);
 
     const moonLight = new THREE.DirectionalLight(0x8eb2e6, 1.8);

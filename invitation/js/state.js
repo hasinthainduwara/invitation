@@ -2,9 +2,8 @@
 export const state = {
     // Audio
     audioCtx: null,
-    windNode: null,
-    fireNode: null,
-    fireNodeClick: null,
+    audioElement: null,
+    audioGainNode: null,
     isAudioPlaying: false,
 
     // Three.js core
@@ -33,6 +32,18 @@ export const state = {
     fireCoreMeshes: [],
     fireBowlPositions: [],
     fireLightPos: null,
+
+    // Moon rays (volumetric light shafts)
+    moonRays: [],
+
+    // Magic sparkles above the scroll
+    magicPoints: null,
+    magicData: null,
+    magicCenter: null,
+    magicGlow: null,
+    magicRadius: 0,
+    magicHeight: 0,
+    magicBaseY: 0,
 
     // First-person controls
     firstPersonActive: false,

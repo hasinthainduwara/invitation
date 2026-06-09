@@ -7,7 +7,7 @@ function createCircleTexture(r, g, b, alphaScale) {
     const ctx = canvas.getContext('2d');
     const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
     grad.addColorStop(0, `rgba(${r},${g},${b},${alphaScale})`);
-    grad.addColorStop(0.35, `rgba(${r},${Math.round(g * 0.65)},${Math.round(b * 0.2)},${alphaScale * 0.75})`);
+    grad.addColorStop(0.35, `rgba(${Math.round(r * 0.7)},${Math.round(g * 0.75)},${Math.round(b * 0.85)},${alphaScale * 0.75})`);
     grad.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 16, 16);
