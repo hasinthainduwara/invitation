@@ -1,4 +1,5 @@
 import { state } from './state.js';
+import { perf } from './perf.js';
 
 /* Soft round mote with a bright core (alpha mask for each sparkle). */
 function makeSparkTexture() {
@@ -53,7 +54,7 @@ export function initMagicParticles(center, size) {
     state.magicHeight = unit * 2.4;
     state.magicBaseY = size.y * 0.45;
 
-    const count = 55;
+    const count = perf.magicCount;
     const positions = new Float32Array(count * 3);
     const alphas = new Float32Array(count);
     const sizes = new Float32Array(count);

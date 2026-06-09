@@ -74,8 +74,15 @@ export function updateFirstPersonMovement(delta) {
     if (state.keysPressed['d'] || state.keysPressed['arrowright']) moveDir.add(right);
     if (state.keysPressed['a'] || state.keysPressed['arrowleft']) moveDir.sub(right);
 
-    if (moveDir.lengthSq() > 0) {
-        moveDir.normalize();
+    // Analog touch drag (magnitude scales speed, so partial drags walk slower)
+    if (state.touchMoveForward) moveDir.addScaledVector(forward, state.touchMoveForward);
+    if (state.touchMoveRight) moveDir.addScaledVector(right, state.touchMoveRight);
+
+    const moveLen = moveDir.length();
+    if (moveLen > 0.0004) {
+        // Clamp to unit length (caps diagonal keyboard combos) but keep
+        // sub-unit analog magnitudes intact for a gentle walk.
+        if (moveLen > 1) moveDir.multiplyScalar(1 / moveLen);
 
         const moveSpeed = 12.0;
         state.camera.position.addScaledVector(moveDir, moveSpeed * delta);

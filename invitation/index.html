@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=16">
+    <link rel="stylesheet" href="styles.css?v=19">
     
     <!-- Three.js & Loaders (CDN) -->
     <!-- Core Three.js library -->
@@ -92,10 +92,11 @@
             <button class="card-close" id="help-close" aria-label="Close help">&times;</button>
             <h3 class="card-title cinzel-heading">HOW TO NAVIGATE</h3>
             <div class="card-divider"></div>
+            <p class="help-goal"><span class="action">Your quest:</span> walk to the glowing scroll on the central pedestal and tap it to read your Summons.</p>
             <ul class="help-list">
                 <li><span class="action">WASD / Arrow Keys</span> to walk around the Great Keep.</li>
-                <li><span class="action">On mobile</span> use the on-screen D-pad to move.</li>
-                <li><span class="action">Click on the scroll</span> (or its pedestal) to read the Summons.</li>
+                <li><span class="action">On mobile</span> drag anywhere to walk &mdash; up to advance, down to step back, left or right to sidestep.</li>
+                <li><span class="action">Click or tap the scroll</span> (or its pedestal) to read the Summons.</li>
             </ul>
         </div>
 
@@ -225,28 +226,17 @@
             </div>
         </div>
 
-        <!-- Mobile Touch Controls (visible on touch devices only) -->
+        <!-- Mobile Touch Controls: drag anywhere to move (visible on touch devices only) -->
         <div id="mobile-controls" class="mobile-controls hidden">
-            <!-- Virtual D-Pad -->
-            <div class="dpad-container" id="dpad">
-                <button class="dpad-btn dpad-up" data-dir="up" aria-label="Move forward">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 4l-8 8h16z" fill="currentColor"/></svg>
-                </button>
-                <button class="dpad-btn dpad-left" data-dir="left" aria-label="Move left">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l8-8v16z" fill="currentColor"/></svg>
-                </button>
-                <div class="dpad-center"></div>
-                <button class="dpad-btn dpad-right" data-dir="right" aria-label="Move right">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M20 12l-8-8v16z" fill="currentColor"/></svg>
-                </button>
-                <button class="dpad-btn dpad-down" data-dir="down" aria-label="Move backward">
-                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 20l8-8H4z" fill="currentColor"/></svg>
-                </button>
+            <!-- Virtual joystick that appears where the finger touches down -->
+            <div id="touch-joystick" class="touch-joystick hidden">
+                <div class="touch-knob"></div>
             </div>
+            <div class="move-hint">Drag to walk </div>
         </div>
     </div>
 
     <!-- Application modules -->
-    <script type="module" src="js/main.js?v=20"></script>
+    <script type="module" src="js/main.js?v=21"></script>
 </body>
 </html>

@@ -1,3 +1,5 @@
+import { perf } from './perf.js';
+
 /* Shared application state passed between modules */
 export const state = {
     // Audio
@@ -51,6 +53,9 @@ export const state = {
     cameraPitch: 0,
     eyeLevelY: 4.0,
     keysPressed: {},
+    // Analog drag-to-move input from touch devices (-1..1 each)
+    touchMoveForward: 0,
+    touchMoveRight: 0,
     isLookDragging: false,
     isPointerLocked: false,
     prevPointerX: 0,
@@ -75,12 +80,12 @@ export const state = {
     // Particles
     emberPoints: null,
     emberPositions: null,
-    emberCount: 90,
+    emberCount: perf.emberCount,
     emberVelocities: [],
     emberLifes: [],
     dustPoints: null,
     dustPositions: null,
-    dustCount: 180,
+    dustCount: perf.dustCount,
     dustVelocities: [],
     boundsMin: null,
     boundsMax: null,

@@ -1,4 +1,5 @@
 import { state } from './state.js';
+import { perf } from './perf.js';
 
 export function initScene() {
     state.container = document.getElementById('canvas-container');
@@ -8,11 +9,11 @@ export function initScene() {
 
     state.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 500);
     state.camera.rotation.order = 'YXZ';
-    state.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
+    state.renderer = new THREE.WebGLRenderer({ antialias: perf.antialias, alpha: false, powerPreference: "high-performance" });
     state.renderer.setSize(window.innerWidth, window.innerHeight);
-    state.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    state.renderer.shadowMap.enabled = true;
-    state.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    state.renderer.setPixelRatio(Math.min(window.devicePixelRatio, perf.pixelRatioCap));
+    state.renderer.shadowMap.enabled = perf.shadows;
+    state.renderer.shadowMap.type = perf.softShadows ? THREE.PCFSoftShadowMap : THREE.PCFShadowMap;
     state.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     state.renderer.toneMappingExposure = 1.6;
     state.container.appendChild(state.renderer.domElement);
@@ -55,9 +56,9 @@ function initLighting() {
 
     const moonLight = new THREE.DirectionalLight(0x8eb2e6, 1.8);
     moonLight.position.set(25, 45, -15);
-    moonLight.castShadow = true;
-    moonLight.shadow.mapSize.width = 2048;
-    moonLight.shadow.mapSize.height = 2048;
+    moonLight.castShadow = perf.shadows;
+    moonLight.shadow.mapSize.width = perf.shadowMapSize;
+    moonLight.shadow.mapSize.height = perf.shadowMapSize;
     moonLight.shadow.camera.near = 0.5;
     moonLight.shadow.camera.far = 120;
 

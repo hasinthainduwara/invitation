@@ -252,7 +252,7 @@ canvas {
 }
 
 .nav-link {
-    display: inline-block;
+    display: none !important;
     color: var(--gold-bright);
     text-decoration: none;
     border: 1px solid rgba(140, 118, 71, 0.5);
@@ -303,11 +303,11 @@ canvas {
 
 /* Side button controls */
 .side-controls {
+    display: none !important;
     position: absolute;
     right: 30px;
     top: 50%;
     transform: translateY(-50%);
-    display: flex;
     flex-direction: column;
     gap: 15px;
     z-index: 15;
@@ -416,6 +416,24 @@ canvas {
     font-size: 1rem;
     line-height: 1.5;
     font-style: italic;
+}
+
+.help-goal {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #f1e4c2;
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, rgba(140, 118, 71, 0.22), rgba(140, 118, 71, 0.08));
+    border: 1px solid rgba(140, 118, 71, 0.45);
+    border-left: 3px solid var(--gold-bright);
+    border-radius: 6px;
+}
+
+.help-goal .action {
+    color: var(--gold-bright);
+    font-weight: 700;
+    letter-spacing: 0.04em;
 }
 
 .help-list {
@@ -946,65 +964,69 @@ canvas {
     }
 }
 
-/* 10. MOBILE TOUCH CONTROLS (D-PAD) */
+/* 10. MOBILE TOUCH CONTROLS (DRAG-TO-MOVE) */
 .mobile-controls {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    pointer-events: none;
+    inset: 0;
+    pointer-events: none; /* visual feedback only; canvas handles the touches */
     z-index: 16;
-    padding: 0 20px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 }
 
 .mobile-controls.hidden {
     display: none;
 }
 
-/* D-Pad grid layout */
-.dpad-container {
-    display: grid;
-    grid-template-columns: 52px 52px 52px;
-    grid-template-rows: 52px 52px 52px;
-    gap: 4px;
-    pointer-events: auto;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+/* Virtual joystick that materialises under the finger while dragging */
+.touch-joystick {
+    position: absolute;
+    width: 144px;
+    height: 144px;
+    margin: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1.5px solid rgba(140, 118, 71, 0.45);
+    background: radial-gradient(circle, rgba(15, 13, 12, 0.35) 0%, rgba(15, 13, 12, 0.12) 70%, transparent 100%);
+    pointer-events: none;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
 
-.dpad-btn {
-    background: rgba(15, 13, 12, 0.75);
-    border: 1px solid rgba(140, 118, 71, 0.5);
-    color: var(--gold-bright);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    touch-action: none;
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    padding: 0;
+.touch-joystick.hidden {
+    display: none;
 }
 
-.dpad-btn:active,
-.dpad-btn.pressed {
+.touch-knob {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 56px;
+    height: 56px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
     background: rgba(140, 118, 71, 0.55);
-    border-color: var(--gold-bright);
-    transform: scale(0.92);
-    color: #fff;
+    border: 1px solid var(--gold-bright);
+    box-shadow: 0 0 12px rgba(140, 118, 71, 0.5);
 }
 
-.dpad-up    { grid-column: 2; grid-row: 1; border-radius: 10px 10px 6px 6px; }
-.dpad-left  { grid-column: 1; grid-row: 2; border-radius: 10px 6px 6px 10px; }
-.dpad-center { grid-column: 2; grid-row: 2; background: rgba(140, 118, 71, 0.15); border: 1px solid rgba(140, 118, 71, 0.25); border-radius: 4px; }
-.dpad-right { grid-column: 3; grid-row: 2; border-radius: 6px 10px 10px 6px; }
-.dpad-down  { grid-column: 2; grid-row: 3; border-radius: 6px 6px 10px 10px; }
+/* Subtle hint along the bottom while exploring on foot */
+.move-hint {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(235, 220, 185, 0.6);
+    padding: 7px 16px;
+    background: rgba(15, 13, 12, 0.5);
+    border: 1px solid rgba(140, 118, 71, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    white-space: nowrap;
+    animation: pulseHint 3s ease-in-out infinite;
+}
 
 /* Look hint */
 .look-hint {
@@ -1308,25 +1330,16 @@ canvas {
         font-size: 0.95rem;
     }
 
-    .dpad-container {
-        grid-template-columns: 46px 46px 46px;
-        grid-template-rows: 46px 46px 46px;
-        gap: 3px;
-    }
-
-    .mobile-controls {
-        padding: 0 14px 14px;
-    }
-
-    .look-hint {
+    .move-hint {
         font-size: 0.6rem;
+        bottom: 16px;
     }
 }
 
 /* ---------- Safe area (notch) handling ---------- */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    .mobile-controls {
-        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    .move-hint {
+        bottom: calc(22px + env(safe-area-inset-bottom));
     }
     .side-controls {
         padding-bottom: env(safe-area-inset-bottom);
@@ -1335,14 +1348,8 @@ canvas {
 
 /* ---------- Landscape phone ---------- */
 @media (max-height: 500px) and (orientation: landscape) {
-    .mobile-controls {
-        padding-bottom: 10px;
-    }
-
-    .dpad-container {
-        grid-template-columns: 40px 40px 40px;
-        grid-template-rows: 40px 40px 40px;
-        gap: 2px;
+    .move-hint {
+        bottom: 10px;
     }
 
     .side-controls {
