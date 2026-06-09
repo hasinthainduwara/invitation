@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=12">
+    <link rel="stylesheet" href="styles.css?v=13">
     
     <!-- Three.js & Loaders (CDN) -->
     <!-- Core Three.js library -->
@@ -94,7 +94,8 @@
             <div class="card-divider"></div>
             <ul class="help-list">
                 <li><span class="action">WASD / Arrow Keys</span> to walk around the Great Keep.</li>
-                <li><span class="action">Drag mouse</span> to look around in first-person view.</li>
+                <li><span class="action">On mobile</span> use the on-screen D-pad to move.</li>
+                <li><span class="action">Click or drag</span> on the scene to look around in first-person view.</li>
                 <li><span class="action">Click on any object</span> (pillars, hearth, floor) to walk over and inspect details.</li>
             </ul>
         </div>
@@ -223,9 +224,33 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile Touch Controls (visible on touch devices only) -->
+        <div id="mobile-controls" class="mobile-controls hidden">
+            <!-- Virtual D-Pad -->
+            <div class="dpad-container" id="dpad">
+                <button class="dpad-btn dpad-up" data-dir="up" aria-label="Move forward">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 4l-8 8h16z" fill="currentColor"/></svg>
+                </button>
+                <button class="dpad-btn dpad-left" data-dir="left" aria-label="Move left">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l8-8v16z" fill="currentColor"/></svg>
+                </button>
+                <div class="dpad-center"></div>
+                <button class="dpad-btn dpad-right" data-dir="right" aria-label="Move right">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M20 12l-8-8v16z" fill="currentColor"/></svg>
+                </button>
+                <button class="dpad-btn dpad-down" data-dir="down" aria-label="Move backward">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 20l8-8H4z" fill="currentColor"/></svg>
+                </button>
+            </div>
+            <!-- Look mode indicator -->
+            <div class="look-hint cinzel-heading" id="look-hint">
+                <span class="look-hint-icon">👁</span> Drag to look
+            </div>
+        </div>
     </div>
 
-    <!-- Script file containing Three.js and site interactions -->
-    <script src="script.js?v=12"></script>
+    <!-- Application modules -->
+    <script type="module" src="js/main.js?v=14"></script>
 </body>
 </html>

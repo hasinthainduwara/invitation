@@ -923,74 +923,415 @@ canvas {
     }
 }
 
-/* 10. RESPONSIVE MEDIA QUERIES */
+/* 10. MOBILE TOUCH CONTROLS (D-PAD) */
+.mobile-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 16;
+    padding: 0 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.mobile-controls.hidden {
+    display: none;
+}
+
+/* D-Pad grid layout */
+.dpad-container {
+    display: grid;
+    grid-template-columns: 52px 52px 52px;
+    grid-template-rows: 52px 52px 52px;
+    gap: 4px;
+    pointer-events: auto;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.7));
+}
+
+.dpad-btn {
+    background: rgba(15, 13, 12, 0.75);
+    border: 1px solid rgba(140, 118, 71, 0.5);
+    color: var(--gold-bright);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    padding: 0;
+}
+
+.dpad-btn:active,
+.dpad-btn.pressed {
+    background: rgba(140, 118, 71, 0.55);
+    border-color: var(--gold-bright);
+    transform: scale(0.92);
+    color: #fff;
+}
+
+.dpad-up    { grid-column: 2; grid-row: 1; border-radius: 10px 10px 6px 6px; }
+.dpad-left  { grid-column: 1; grid-row: 2; border-radius: 10px 6px 6px 10px; }
+.dpad-center { grid-column: 2; grid-row: 2; background: rgba(140, 118, 71, 0.15); border: 1px solid rgba(140, 118, 71, 0.25); border-radius: 4px; }
+.dpad-right { grid-column: 3; grid-row: 2; border-radius: 6px 10px 10px 6px; }
+.dpad-down  { grid-column: 2; grid-row: 3; border-radius: 6px 6px 10px 10px; }
+
+/* Look hint */
+.look-hint {
+    pointer-events: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: rgba(235, 220, 185, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(15, 13, 12, 0.5);
+    border: 1px solid rgba(140, 118, 71, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: pulseHint 3s ease-in-out infinite;
+}
+
+.look-hint-icon {
+    font-size: 1rem;
+}
+
+@keyframes pulseHint {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* 11. RESPONSIVE MEDIA QUERIES */
+
+/* ---------- Tablet & Small Desktop ---------- */
 @media (max-width: 768px) {
-    .splash-title {
-        font-size: 2.4rem;
-    }
-    
-    .ui-header {
-        padding: 20px;
-    }
-    
-    .side-controls {
-        right: 20px;
-        bottom: 20px;
-        top: auto;
-        transform: none;
-        flex-direction: row;
-        width: calc(100% - 40px);
-        left: 20px;
-        justify-content: center;
-    }
-    
-    .side-controls .ui-btn {
-        flex-grow: 1;
-        padding: 12px;
-        font-size: 0.75rem;
-    }
-
-    #help-card {
-        left: 20px;
-        right: 20px;
-        bottom: 80px;
-        max-width: none;
-    }
-
-    #object-card {
-        left: 20px;
-        right: 20px;
-        bottom: 80px;
-        max-width: none;
-    }
-    
-    .scroll-scroller {
-        max-height: 80%;
-    }
-
-    .parchment-inner {
-        padding: 25px 20px;
-    }
-    
-    .parchment-title {
-        font-size: 1.6rem;
-    }
-    
-    .parchment-body .summons-text {
-        font-size: 1.1rem;
-        margin-bottom: 20px;
-    }
-    
-    .details-box {
-        padding: 15px;
-        margin-bottom: 25px;
-    }
-    
-    .detail-item {
+    body, html {
         font-size: 1rem;
     }
 
+    .splash-title {
+        font-size: 2.2rem;
+        letter-spacing: 0.12em;
+    }
+
+    .splash-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .crest-container svg {
+        width: 90px;
+        height: 90px;
+    }
+
+    .ui-header {
+        padding: 14px 16px;
+    }
+
+    .nav-link {
+        font-size: 0.7rem;
+        padding: 7px 14px;
+        letter-spacing: 0.1em;
+    }
+
+    .ui-btn {
+        font-size: 0.72rem;
+        padding: 7px 12px;
+    }
+
+    .ui-btn .label {
+        display: none;
+    }
+
+    .side-controls {
+        right: 16px;
+        bottom: 16px;
+        top: auto;
+        transform: none;
+        flex-direction: row;
+        width: calc(100% - 32px);
+        left: 16px;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .side-controls .ui-btn {
+        flex-grow: 1;
+        padding: 12px 10px;
+        font-size: 0.7rem;
+    }
+
+    #help-card {
+        left: 16px;
+        right: 16px;
+        bottom: 75px;
+        max-width: none;
+        padding: 18px 20px;
+    }
+
+    #object-card {
+        left: 16px;
+        right: 16px;
+        bottom: 75px;
+        max-width: none;
+        padding: 18px 20px;
+    }
+
+    .card-title {
+        font-size: 0.9rem;
+    }
+
+    .card-desc {
+        font-size: 0.9rem;
+    }
+
+    .help-list li {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+
+    .scroll-scroller {
+        width: 94%;
+        max-height: 82%;
+    }
+
+    .parchment-inner {
+        padding: 22px 18px;
+    }
+
+    .parchment-category {
+        font-size: 0.6rem;
+    }
+
+    .parchment-title {
+        font-size: 1.5rem;
+        letter-spacing: 0.1em;
+    }
+
+    .parchment-body .greeting {
+        font-size: 1rem;
+    }
+
+    .parchment-body .summons-text {
+        font-size: 1.05rem;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    .details-box {
+        padding: 14px;
+        margin-bottom: 22px;
+    }
+
+    .details-heading {
+        font-size: 0.9rem;
+    }
+
+    .detail-item {
+        font-size: 0.95rem;
+    }
+
+    .detail-item strong {
+        font-size: 0.7rem;
+    }
+
+    .wax-seal {
+        width: 70px;
+        height: 70px;
+    }
+
+    .rsvp-btn {
+        padding: 12px 30px;
+        font-size: 0.9rem;
+    }
+
     .rsvp-modal-content {
-        padding: 25px 30px;
+        width: 94%;
+        padding: 25px 22px;
+    }
+
+    .rsvp-modal-title {
+        font-size: 1.05rem;
+    }
+
+    .form-group label {
+        font-size: 0.72rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group select {
+        font-size: 1rem;
+        padding: 10px 12px;
+    }
+
+    .radio-label {
+        font-size: 0.95rem;
+    }
+
+    .submit-btn {
+        font-size: 0.85rem;
+        padding: 12px;
     }
 }
+
+/* ---------- Mobile with D-pad visible ---------- */
+@media (max-width: 768px) and (hover: none) and (pointer: coarse) {
+    .side-controls {
+        bottom: 185px;
+    }
+
+    #help-card,
+    #object-card {
+        bottom: 200px;
+    }
+}
+
+/* ---------- Small Phone ---------- */
+@media (max-width: 480px) {
+    .splash-title {
+        font-size: 1.7rem;
+        letter-spacing: 0.08em;
+        margin-bottom: 25px;
+    }
+
+    .splash-subtitle {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        margin-bottom: 10px;
+    }
+
+    .crest-container {
+        margin-bottom: 30px;
+    }
+
+    .crest-container svg {
+        width: 70px;
+        height: 70px;
+    }
+
+    .progress-wrapper {
+        max-width: 280px;
+    }
+
+    .enter-btn {
+        padding: 10px 28px;
+        font-size: 0.8rem;
+    }
+
+    .ui-header {
+        padding: 10px 12px;
+    }
+
+    .nav-link {
+        font-size: 0.62rem;
+        padding: 6px 10px;
+    }
+
+    .side-controls {
+        left: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+        gap: 8px;
+    }
+
+    .side-controls .ui-btn {
+        padding: 10px 8px;
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+    }
+
+    #help-card,
+    #object-card {
+        left: 10px;
+        right: 10px;
+        padding: 14px 16px;
+    }
+
+    .scroll-scroller {
+        width: 97%;
+        max-height: 85%;
+    }
+
+    .parchment-inner {
+        padding: 18px 14px;
+    }
+
+    .parchment-title {
+        font-size: 1.25rem;
+    }
+
+    .parchment-body .summons-text {
+        font-size: 0.95rem;
+    }
+
+    .detail-item {
+        font-size: 0.9rem;
+    }
+
+    .rsvp-modal-content {
+        width: 96%;
+        padding: 20px 16px;
+    }
+
+    .rsvp-modal-title {
+        font-size: 0.95rem;
+    }
+
+    .dpad-container {
+        grid-template-columns: 46px 46px 46px;
+        grid-template-rows: 46px 46px 46px;
+        gap: 3px;
+    }
+
+    .mobile-controls {
+        padding: 0 14px 14px;
+    }
+
+    .look-hint {
+        font-size: 0.6rem;
+    }
+}
+
+/* ---------- Safe area (notch) handling ---------- */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .mobile-controls {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    }
+    .side-controls {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* ---------- Landscape phone ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+    .mobile-controls {
+        padding-bottom: 10px;
+    }
+
+    .dpad-container {
+        grid-template-columns: 40px 40px 40px;
+        grid-template-rows: 40px 40px 40px;
+        gap: 2px;
+    }
+
+    .side-controls {
+        bottom: 10px;
+    }
+
+    .ui-header {
+        padding: 8px 12px;
+    }
+
+    .scroll-scroller {
+        max-height: 92%;
+    }
+}
+
