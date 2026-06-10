@@ -27,6 +27,7 @@ export const state = {
     roofMaterial: null,
     ironMaterial: null,
     fireCoreMaterial: null,
+    scrollMaterial: null,
     wallMaterial: null,
 
     // Lighting & fire

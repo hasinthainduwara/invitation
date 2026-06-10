@@ -36,10 +36,20 @@ export function initMaterials() {
         transparent: true,
         opacity: 0.95
     });
+
+    // The scroll (r1.fbx): radiant, polished gold that glows in the dark hall
+    state.scrollMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffd27a,
+        emissive: 0xffab2e,
+        emissiveIntensity: 0.9,
+        roughness: 0.3,
+        metalness: 0.95
+    });
 }
 
 export function getMaterialForFBX(fileName) {
     const name = fileName.toLowerCase();
+    if (name.includes('r1')) return state.scrollMaterial; // must precede the '1.fbx' check below
     if (name.includes('floor')) return state.floorMaterial;
     if (name.includes('wall1')) return state.wallMaterial;
     if (name.includes('wall')) return state.stoneMaterial;
