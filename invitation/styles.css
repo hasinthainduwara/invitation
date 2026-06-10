@@ -610,6 +610,24 @@ canvas {
     font-style: normal;
 }
 
+/* Crest logo standing in for the title text on the parchment. The artwork is
+   dark ink on transparency, so it reads naturally on the cream sheet. */
+.parchment-logo {
+    display: block;
+    width: min(300px, 70%);
+    height: auto;
+    margin: 0 auto 4px;
+}
+
+.parchment-year {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #1a130a;
+}
+
 .parchment-category {
     font-size: 0.7rem;
     font-weight: 700;
