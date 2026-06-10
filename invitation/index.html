@@ -8,9 +8,9 @@
     <!-- Google Fonts for Medieval/Game of Thrones Aesthetics -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=19">
+    <link rel="stylesheet" href="styles.css?v=21">
     
     <!-- Three.js & Loaders (CDN) -->
     <!-- Core Three.js library -->
@@ -32,9 +32,11 @@
         <canvas id="splash-particles"></canvas>
         
         <div class="splash-content">
-            <h2 class="splash-subtitle cinzel-heading">YOU ARE SUMMONED BY THE LORDS</h2>
-            <h1 class="splash-title cinzel-heading">THE REALM</h1>
-            
+            <h2 class="splash-subtitle sinhala" lang="si">අභිමානවත් පරපුරක ශ්‍රේෂ්ඨතම ආගමනය..</h2>
+            <h1 class="splash-title">
+                <img src="assets/objects/logo.png" class="splash-logo" alt="ප්‍රතාභිතීර්ථ" lang="si">
+            </h1>
+
             <!-- Pulsing Crest Graphic -->
             <div class="crest-container">
                 <svg class="crest-svg" viewBox="0 0 100 100" width="120" height="120">
@@ -62,7 +64,7 @@
             </div>
 
             <!-- Enter Button -->
-            <button id="enter-btn" class="enter-btn cinzel-heading hidden">ENTER THE KEEP</button>
+            <button id="enter-btn" class="enter-btn sinhala hidden" lang="si">පිවිසෙන්න</button>
         </div>
     </section>
 
@@ -118,9 +120,9 @@
                 <article class="parchment-sheet">
                     <div class="parchment-inner">
                         <button class="scroll-close" id="scroll-close" aria-label="Close Summons">&times;</button>
-                        <header class="parchment-header text-center">
-                            <h2 class="parchment-category cinzel-heading">By Order of the Lords of the Realm</h2>
-                            <h1 class="parchment-title cinzel-heading">ROYAL SUMMONS</h1>
+                        <header class="parchment-header text-center" lang="si">
+                            <h2 class="parchment-category sinhala">අභිමානවත් පරපුරක ශ්‍රේෂ්ඨතම ආගමනය</h2>
+                            <h1 class="parchment-title sinhala">ප්‍රතාභිතීර්ථ 2025</h1>
                             <div class="parchment-divider">
                                 <span class="line-left"></span>
                                 <svg viewBox="0 0 100 100" width="20" height="20" class="divider-icon">
@@ -130,35 +132,42 @@
                                 <span class="line-right"></span>
                             </div>
                         </header>
-                        
-                        <div class="parchment-body">
-                            <p class="greeting text-center">Hearken, noble lord, lady, or champion of the Realm,</p>
-                            <p class="summons-text">
-                                You are hereby summoned to assemble at the Great Keep of the Seven Kingdoms to witness the grand celebration of union and honor. The ancient halls are ready, the hearth fires are stoked, and the goblet is filled. 
+
+                        <div class="parchment-body" lang="si">
+                            <p class="greeting sinhala text-center">
+                                මමත්වයේ තුමුල හස්තය පරදවා<br>
+                                මුවර ගිනි දළු මවන්නට..
                             </p>
-                            
+                            <p class="summons-text sinhala">
+                                ශ්‍රී ජයවර්ධනපුර විශ්වවිද්‍යාලයීය තාක්ෂණ පීඨයේ 2023/24 වසර කණ්ඩායම සමාජානුයෝජනය කිරීමේ වැඩසටහන..
+                            </p>
+                            <p class="summons-text sinhala text-center">
+                                තේජ මකරිඳුගේ හසැති අන්ධකාර ස්වරපත්, යුක්තියේ අසිපත් අරබයා නූතනත්වයට පුදනු වස්..
+                            </p>
+
                             <div class="details-box text-center">
-                                <h3 class="details-heading cinzel-heading">THE GATHERING</h3>
-                                <p class="detail-item"><strong class="cinzel-heading">DATE:</strong> Summer Solstice, 298 AC</p>
-                                <p class="detail-item"><strong class="cinzel-heading">HOUR:</strong> The Turn of the Dusk Tide</p>
-                                <p class="detail-item"><strong class="cinzel-heading">LOCATION:</strong> The Great Keep, Valyrian Halls</p>
+                                <h3 class="details-heading sinhala">වැඩසටහන</h3>
+                                <p class="detail-item sinhala"><strong class="sinhala">දිනය :</strong> 2026 පොසොන් මස 13 වන ශනි දින</p>
+                                <p class="detail-item sinhala"><strong class="sinhala">වේලාව :</strong> අපරභාග 6.00 සිට</p>
+                                <p class="detail-item sinhala"><strong class="sinhala">ස්ථානය :</strong> තාක්ෂණ පීඨ ශ්‍රී සෝරත ශ්‍රවණාගාරය</p>
                             </div>
+
+                            <p class="greeting sinhala text-center">
+                                ඔබවහන්සේට / ඔබතුමාට / ඔබතුමියට කෙරෙන ගෞරවනීය ඇරයුමයි !
+                            </p>
 
                             <div class="wax-seal-wrapper text-center">
                                 <svg class="wax-seal" viewBox="0 0 100 100" width="90" height="90">
                                     <circle cx="50" cy="50" r="42" fill="#8c1c1c" filter="drop-shadow(2px 4px 6px rgba(0,0,0,0.6))" />
                                     <!-- Inner irregular border of stamp -->
-                                    <path d="M50,12 C72,10 85,25 88,50 C90,75 72,88 50,88 C28,88 10,75 12,50 C15,25 28,10 50,12 Z" 
+                                    <path d="M50,12 C72,10 85,25 88,50 C90,75 72,88 50,88 C28,88 10,75 12,50 C15,25 28,10 50,12 Z"
                                           fill="none" stroke="#631010" stroke-width="3" />
                                     <!-- Sigil mark inside wax seal (Dragon/Sword) -->
                                     <path d="M50,22 L50,78 M35,42 L65,42 M42,42 C42,30 58,30 58,42" fill="none" stroke="#a62929" stroke-width="3.5" stroke-linecap="round"/>
                                 </svg>
-                                <p class="sigil-label cinzel-heading">Seal of the Realm</p>
+                                <p class="sigil-label sinhala">2022/23 සහෝදරත්වය<br>තාක්ෂණ පීඨ ශිෂ්‍ය සංගමය<br>ශ්‍රී ජයවර්ධනපුර විශ්වවිද්‍යාලය</p>
                             </div>
-                            
-                            <div class="text-center actions-wrapper">
-                                <button id="btn-rsvp-trigger" class="rsvp-btn cinzel-heading">RSVP Allegiance</button>
-                            </div>
+
                         </div>
                     </div>
                 </article>
@@ -237,6 +246,6 @@
     </div>
 
     <!-- Application modules -->
-    <script type="module" src="js/main.js?v=22"></script>
+    <script type="module" src="js/main.js?v=25"></script>
 </body>
 </html>

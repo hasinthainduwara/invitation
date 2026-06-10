@@ -24,14 +24,16 @@ export function initUI() {
         dom.scrollToggle.textContent = "Read Summons";
     });
 
-    dom.btnRsvpTrigger.addEventListener('click', () => {
-        dom.scrollOverlay.classList.add('hidden');
-        dom.scrollToggle.textContent = "Read Summons";
+    if (dom.btnRsvpTrigger) {
+        dom.btnRsvpTrigger.addEventListener('click', () => {
+            dom.scrollOverlay.classList.add('hidden');
+            dom.scrollToggle.textContent = "Read Summons";
 
-        dom.rsvpModal.classList.remove('hidden');
-        dom.rsvpForm.classList.remove('hidden');
-        dom.rsvpSuccess.classList.add('hidden');
-    });
+            dom.rsvpModal.classList.remove('hidden');
+            dom.rsvpForm.classList.remove('hidden');
+            dom.rsvpSuccess.classList.add('hidden');
+        });
+    }
 
     dom.rsvpClose.addEventListener('click', () => dom.rsvpModal.classList.add('hidden'));
     dom.rsvpModal.addEventListener('click', (e) => {

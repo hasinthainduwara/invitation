@@ -127,6 +127,19 @@ canvas {
     margin-bottom: 40px;
     color: #fff;
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.15), 0 4px 10px rgba(0,0,0,0.9);
+    line-height: 0;
+}
+
+/* The crest logo ships as black artwork on transparency; invert() flips it to
+   white and the drop-shadows recreate the soft glow the old title text had. */
+.splash-logo {
+    display: block;
+    width: min(460px, 82vw);
+    height: auto;
+    filter: invert(1)
+        drop-shadow(0 0 18px rgba(255, 255, 255, 0.18))
+        drop-shadow(0 4px 10px rgba(0, 0, 0, 0.9));
+    animation: fadeInLettering 2.4s ease forwards;
 }
 
 .crest-container {
@@ -584,6 +597,17 @@ canvas {
     position: relative;
     min-height: 100%;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Sinhala invitation text — swap the Latin display fonts for a Sinhala serif
+   and drop the wide Latin letter-spacing that breaks Sinhala glyph clusters. */
+.parchment-sheet .sinhala,
+.splash-content .sinhala,
+.rsvp-btn.sinhala {
+    font-family: 'Noto Serif Sinhala', 'Cormorant Garamond', serif;
+    letter-spacing: 0.01em;
+    line-height: 1.7;
+    font-style: normal;
 }
 
 .parchment-category {
