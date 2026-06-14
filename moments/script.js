@@ -118,7 +118,64 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       3. CANVAS PARTICLE SYSTEM (SNOWFALL)
+       3. BACKGROUND MUSIC
+       ========================================================================== */
+    const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+    let musicStarted = false;
+
+    function updateMusicUI() {
+        const playing = bgMusic && !bgMusic.paused;
+        musicToggle.classList.toggle('playing', playing);
+        musicToggle.classList.toggle('muted', !playing);
+    }
+
+    function startMusic() {
+        if (!bgMusic) return;
+        const p = bgMusic.play();
+        if (p && p.then) {
+            p.then(() => { musicStarted = true; updateMusicUI(); }).catch(updateMusicUI);
+        } else {
+            musicStarted = true;
+            updateMusicUI();
+        }
+    }
+
+    // Try to autoplay; most browsers require a user gesture first.
+    startMusic();
+
+    function cleanupGesture() {
+        window.removeEventListener('pointerdown', firstGesture);
+        window.removeEventListener('keydown', firstGesture);
+    }
+    function firstGesture(e) {
+        // Let the toggle button manage its own clicks
+        if (e.target && e.target.closest && e.target.closest('#music-toggle')) {
+            cleanupGesture();
+            return;
+        }
+        if (!musicStarted) startMusic();
+        cleanupGesture();
+    }
+    window.addEventListener('pointerdown', firstGesture);
+    window.addEventListener('keydown', firstGesture);
+
+    musicToggle.addEventListener('click', () => {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            musicStarted = true;
+        } else {
+            bgMusic.pause();
+        }
+        updateMusicUI();
+    });
+
+    bgMusic.addEventListener('play', updateMusicUI);
+    bgMusic.addEventListener('pause', updateMusicUI);
+    updateMusicUI();
+
+    /* ==========================================================================
+       4. CANVAS PARTICLE SYSTEM (SNOWFALL)
        ========================================================================== */
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
